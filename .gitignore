@@ -1,0 +1,6 @@
+._*
+.~lock.*
+data/
+vendor/
+composer.lock
+composer.phar
