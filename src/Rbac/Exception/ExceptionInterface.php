@@ -10,4 +10,5 @@
 namespace Rbac\Exception;
 
 interface ExceptionInterface
-{}
+{
+}
