@@ -10,10 +10,10 @@
 
 namespace RbacTest;
 
-use Rbac\Role;
+use Rbac\Role\Role;
 
 /**
- * @covers \Rbac\Role
+ * @covers \Rbac\Role\Role
  * @group Coverage
  */
 class RoleTest extends \PHPUnit_Framework_TestCase
@@ -22,37 +22,6 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     {
         $role = new Role('phpIsHell');
         $this->assertEquals('phpIsHell', $role->getName());
-    }
-
-    public function testCanAddChild()
-    {
-        $role  = new Role('php');
-        $child = new Role('ror');
-        $role->addChild($child);
-
-        $count = 0;
-
-        foreach ($role as $child) {
-            $count++;
-        }
-
-        $this->assertEquals(1, $count);
-    }
-
-    public function testCanRemoveChild()
-    {
-        $role  = new Role('php');
-        $child = new Role('ror');
-        $role->addChild($child);
-        $role->removeChild($child);
-
-        $count = 0;
-
-        foreach ($role as $child) {
-            $count++;
-        }
-
-        $this->assertEquals(0, $count);
     }
 
     public function testRoleCanHavePermission()
@@ -66,17 +35,5 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $role->removePermission('debug');
         $this->assertFalse($role->hasPermission('debug'));
         $this->assertCount(0, $role->getPermissions());
-    }
-
-    public function testDontTestChildPermission()
-    {
-        $role  = new Role('php');
-        $child = new Role('ror');
-
-        $role->addChild($role);
-        $child->addPermission('debug');
-
-        $this->assertTrue($child->hasPermission('debug'));
-        $this->assertFalse($role->hasPermission('debug'));
     }
 }

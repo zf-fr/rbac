@@ -7,16 +7,16 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Rbac;
+namespace Rbac\Role;
 
-use RecursiveIterator;
+use Rbac\Permission\PermissionInterface;
 
 /**
- * Interface that all roles should implement
+ * Interface for a flat role
  *
  * The role embeds all the information needed to evaluate if a given role has a given permission
  */
-interface RoleInterface extends RecursiveIterator
+interface RoleInterface
 {
     /**
      * Get the name of the role.
@@ -55,20 +55,4 @@ interface RoleInterface extends RecursiveIterator
      * @return string[]|PermissionInterface[]
      */
     public function getPermissions();
-
-    /**
-     * Add a child
-     *
-     * @param  RoleInterface $child
-     * @return void
-     */
-    public function addChild(RoleInterface $child);
-
-    /**
-     * Remove a child
-     *
-     * @param  RoleInterface $child
-     * @return void
-     */
-    public function removeChild(RoleInterface $child);
 }

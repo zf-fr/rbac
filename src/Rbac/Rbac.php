@@ -9,6 +9,9 @@
 
 namespace Rbac;
 
+use Rbac\Permission\PermissionInterface;
+use Rbac\Role\HierarchicalRoleInterface;
+use Rbac\Role\RoleInterface;
 use RecursiveIteratorIterator;
 
 /**
@@ -19,30 +22,12 @@ class Rbac
     /**
      * Determines if access is granted by checking the role and child roles for permission.
      *
-     * @param  RoleInterface                    $role
-     * @param  PermissionInterface|string       $permission
-     * @param  AssertionInterface|Callable|null $assert
-     * @throws Exception\InvalidArgumentException
+     * @param  RoleInterface              $role
+     * @param  PermissionInterface|string $permission
      * @return bool
      */
-    public function isGranted(RoleInterface $role, $permission, $assert = null)
+    public function isGranted(RoleInterface $role, $permission)
     {
-        if ($assert) {
-            if ($assert instanceof AssertionInterface) {
-                if (!$assert->assert($this)) {
-                    return false;
-                }
-            } elseif (is_callable($assert)) {
-                if (!$assert($this)) {
-                    return false;
-                }
-            } else {
-                throw new Exception\InvalidArgumentException(
-                    'Assertions must be a callable or an instance of Zend\Permissions\Rbac\AssertionInterface'
-                );
-            }
-        }
-
         $permission = (string) $permission;
 
         // First check directly the role
@@ -50,7 +35,11 @@ class Rbac
             return true;
         }
 
-        // Otherwise, we recursively check each children
+        // Otherwise, we recursively check each children only if it's a hierarchical role
+        if (!$role instanceof HierarchicalRoleInterface) {
+            return false;
+        }
+
         $iteratorIterator = new RecursiveIteratorIterator($role, RecursiveIteratorIterator::SELF_FIRST);
 
         foreach ($iteratorIterator as $child) {

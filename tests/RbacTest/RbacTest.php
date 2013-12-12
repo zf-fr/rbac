@@ -10,8 +10,9 @@
 
 namespace RbacTest;
 
-use Rbac;
-use RbacTest\TestAsset;
+use Rbac\Rbac;
+use Rbac\Role\HierarchicalRole;
+use Rbac\Role\Role;
 
 /**
  * @covers Rbac\Rbac
@@ -20,20 +21,30 @@ use RbacTest\TestAsset;
 class RbacTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Rbac\Rbac
+     * @var Rbac
      */
     protected $rbac;
 
     public function setUp()
     {
-        $this->rbac = new Rbac\Rbac();
+        $this->rbac = new Rbac();
     }
 
-    public function testCanGrantAccessWithHierarchyOfRoles()
+    public function testCanGrantAccessWithFlatRole()
     {
-        $role       = new Rbac\Role('foo');
-        $subRole    = new Rbac\Role('bar');
-        $subSubRole = new Rbac\Role('baz');
+        $role = new Role('foo');
+
+        $role->addPermission('debug');
+
+        $this->assertTrue($this->rbac->isGranted($role, 'debug'));
+        $this->assertFalse($this->rbac->isGranted($role, 'fix'));
+    }
+
+    public function testCanGrantAccessWithHierarchicalRole()
+    {
+        $role       = new HierarchicalRole('foo');
+        $subRole    = new HierarchicalRole('bar');
+        $subSubRole = new HierarchicalRole('baz');
 
         $role->addChild($subRole);
         $subRole->addChild($subSubRole);
@@ -43,14 +54,5 @@ class RbacTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->rbac->isGranted($role, 'debug'), 'Inherit permission from its children');
         $this->assertTrue($this->rbac->isGranted($subRole, 'debug'), 'Have its own permission');
         $this->assertFalse($this->rbac->isGranted($subSubRole, 'debug'), 'Does not have permission from its parent');
-    }
-
-    public function testAssertions()
-    {
-        $role = new Rbac\Role('foo');
-        $role->addPermission('debug');
-
-        $this->assertFalse($this->rbac->isGranted($role, 'debug', new TestAsset\SimpleFalseAssertion()));
-        $this->assertTrue($this->rbac->isGranted($role, 'debug', new TestAsset\SimpleTrueAssertion()));
     }
 }

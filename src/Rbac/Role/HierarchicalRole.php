@@ -7,81 +7,24 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Rbac;
+namespace Rbac\Role;
 
 use RecursiveIterator;
 
-class Role implements RoleInterface
+/**
+ * Simple implementation for a hierarchical role
+ */
+class HierarchicalRole extends Role implements HierarchicalRoleInterface
 {
-    /**
-     * @var string
-     */
-    protected $name;
-
     /**
      * @var array|RoleInterface[]
      */
     protected $children = [];
 
     /**
-     * @var array|PermissionInterface
-     */
-    protected $permissions = [];
-
-    /**
      * @var int
      */
     protected $index = 0;
-
-    /**
-     * Constructor
-     *
-     * @param string $name
-     */
-    public function __construct($name)
-    {
-        $this->name = (string) $name;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function addPermission($permission)
-    {
-        $this->permissions[(string) $permission] = $permission;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function removePermission($permission)
-    {
-        unset($this->permissions[(string) $permission]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function hasPermission($permission)
-    {
-        return isset($this->permissions[(string) $permission]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getPermissions()
-    {
-        return $this->permissions;
-    }
 
     /**
      * {@inheritDoc}

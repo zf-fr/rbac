@@ -7,8 +7,13 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Rbac;
+namespace Rbac\Permission;
 
+use Rbac\Role\RoleInterface;
+
+/**
+ * Interface for permission
+ */
 interface PermissionInterface
 {
     /**
