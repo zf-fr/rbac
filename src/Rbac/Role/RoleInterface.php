@@ -26,33 +26,10 @@ interface RoleInterface
     public function getName();
 
     /**
-     * Add permission to the role.
-     *
-     * @param  PermissionInterface|string $permission
-     * @return void
-     */
-    public function addPermission($permission);
-
-    /**
-     * Remove a permission from the role
-     *
-     * @param  PermissionInterface|string $permission
-     * @return void
-     */
-    public function removePermission($permission);
-
-    /**
      * Checks if a permission exists for this role (it does not check child roles)
      *
      * @param  PermissionInterface|string $permission
      * @return bool
      */
     public function hasPermission($permission);
-
-    /**
-     * Get all the permissions of the role (it does not get child role permissions)
-     *
-     * @return string[]|PermissionInterface[]
-     */
-    public function getPermissions();
 }
