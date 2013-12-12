@@ -1,7 +1,7 @@
-ZfrRbac
-=======
+Rbac
+====
 
-ZfrRbac (not to be confused with ZfcRbac) is a pure PHP implementation of the RBAC (*Role based access control*)
+Rbac (not to be confused with ZfcRbac) is a pure PHP implementation of the RBAC (*Role based access control*)
 concept. Actually, it is a Zend Framework 3 prototype of the ZF2 Zend\Permissions\Rbac component.
 
 It aims to fix some design mistakes that were made to make it more usable and more efficient.

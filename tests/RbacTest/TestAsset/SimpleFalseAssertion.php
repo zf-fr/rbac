@@ -8,18 +8,12 @@
  * @package   Zend_Permissions
  */
 
-namespace ZfrRbacTest\Permissions\Rbac\TestAsset;
+namespace RbacTest\TestAsset;
 
-use ZfrRbac\Permissions\Rbac\AssertionInterface;
-use ZfrRbac\Permissions\Rbac\Rbac;
+use Rbac\AssertionInterface;
+use Rbac\Rbac;
 
-/**
- * @category   Zend
- * @package    Zend_Permissions
- * @subpackage UnitTests
- * @group      Zend_Rbac
- */
-class SimpleTrueAssertion implements AssertionInterface
+class SimpleFalseAssertion implements AssertionInterface
 {
     /**
      * Assertion method - must return a boolean.
@@ -29,6 +23,6 @@ class SimpleTrueAssertion implements AssertionInterface
      */
     public function assert(Rbac $rbac)
     {
-        return true;
+        return false;
     }
 }

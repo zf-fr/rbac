@@ -8,15 +8,13 @@
  * @package   Zend_Permissions
  */
 
-namespace ZfrRbacTest\Permissions\Rbac;
+namespace RbacTest;
 
-use ZfrRbac\Permissions\Rbac\Role;
+use Rbac\Role;
 
 /**
- * @category   Zend
- * @package    Zend_Permissions
- * @subpackage UnitTests
- * @group      Zend_Rbac
+ * @covers \Rbac\Role
+ * @group Coverage
  */
 class RoleTest extends \PHPUnit_Framework_TestCase
 {

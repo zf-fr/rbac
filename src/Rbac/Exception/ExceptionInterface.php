@@ -7,15 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ZfrRbac\Permissions\Rbac;
+namespace Rbac\Exception;
 
-interface AssertionInterface
-{
-    /**
-     * Assertion method - must return a boolean.
-     *
-     * @param  Rbac $rbac
-     * @return bool
-     */
-    public function assert(Rbac $rbac);
-}
+interface ExceptionInterface
+{}

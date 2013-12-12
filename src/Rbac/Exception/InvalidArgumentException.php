@@ -7,7 +7,8 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace ZfrRbac\Permissions\Rbac\Exception;
+namespace Rbac\Exception;
 
-interface ExceptionInterface
+class InvalidArgumentException extends \InvalidArgumentException implements
+    ExceptionInterface
 {}

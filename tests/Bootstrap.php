@@ -16,8 +16,6 @@
  * and is licensed under the MIT license.
  */
 
-use ZfrRestTest\Util\ServiceManagerFactory;
-
 ini_set('error_reporting', E_ALL);
 
 $files = [__DIR__ . '/../vendor/autoload.php', __DIR__ . '/../../../autoload.php'];
@@ -34,7 +32,7 @@ if (! isset($loader)) {
     throw new RuntimeException('vendor/autoload.php could not be found. Did you install via composer?');
 }
 
-$loader->add('ZfrRbacTest\\', __DIR__);
+$loader->add('RbacTest\\', __DIR__);
 
 $configFiles = [__DIR__ . '/TestConfiguration.php', __DIR__ . '/TestConfiguration.php.dist'];
 

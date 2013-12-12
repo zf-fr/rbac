@@ -1,5 +1,5 @@
 {
-    "name": "zfr/zfr-rbac",
+    "name": "zfr/rbac",
     "description": "Zend Framework 3 prototype for Zend\\Permissions\\Rbac.",
     "type": "library",
     "license": "MIT",
@@ -9,7 +9,7 @@
         "rbac",
         "security"
     ],
-    "homepage": "https://github.com/zf-fr/zfr-rbac",
+    "homepage": "https://github.com/zf-fr/rbac",
     "authors": [
         {
             "name": "Michaël Gallego",
@@ -27,7 +27,7 @@
     },
     "autoload": {
         "psr-0": {
-            "ZfrRbac\\": "src/"
+            "Rbac\\": "src/"
         }
     }
 }

@@ -8,21 +8,19 @@
  * @package   Zend_Permissions
  */
 
-namespace ZfrRbacTest\Permissions\Rbac;
+namespace RbacTest;
 
-use ZfrRbac\Permissions\Rbac;
-use ZfrRbacTest\Permissions\Rbac\TestAsset;
+use Rbac;
+use RbacTest\TestAsset;
 
 /**
- * @category   Zend
- * @package    Zend_Permissions
- * @subpackage UnitTests
- * @group      Zend_Rbac
+ * @covers Rbac\Rbac
+ * @group Coverage
  */
 class RbacTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var \Zend\Permissions\Rbac\Rbac
+     * @var Rbac\Rbac
      */
     protected $rbac;
 
