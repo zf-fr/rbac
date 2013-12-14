@@ -9,8 +9,6 @@
 
 namespace Rbac\Permission;
 
-use Rbac\Role\RoleInterface;
-
 /**
  * Interface for permission
  */
@@ -22,13 +20,6 @@ interface PermissionInterface
      * @return string|int
      */
     public function getName();
-
-    /**
-     * Get roles associated with the permission
-     *
-     * @return RoleInterface[]
-     */
-    public function getRoles();
 
     /**
      * Cast the permission to a string (must return the permission name)
