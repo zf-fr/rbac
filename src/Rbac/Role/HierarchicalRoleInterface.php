@@ -34,12 +34,4 @@ interface HierarchicalRoleInterface extends RoleInterface, RecursiveIterator
      * @return void
      */
     public function addChild(RoleInterface $child);
-
-    /**
-     * Remove a child
-     *
-     * @param  RoleInterface $child
-     * @return void
-     */
-    public function removeChild(RoleInterface $child);
 }
