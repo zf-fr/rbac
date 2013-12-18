@@ -17,12 +17,8 @@ interface PermissionInterface
     /**
      * Get the permission name
      *
-     * @return string|int
-     */
-    public function getName();
-
-    /**
-     * Cast the permission to a string (must return the permission name)
+     * You really must return the name of the permission as internally, the casting to string is used
+     * as an optimization to avoid type checkings
      *
      * @return string
      */
