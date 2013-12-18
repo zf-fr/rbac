@@ -27,11 +27,4 @@ use RecursiveIterator;
  */
 interface HierarchicalRoleInterface extends RoleInterface, RecursiveIterator
 {
-    /**
-     * Add a child
-     *
-     * @param  RoleInterface $child
-     * @return void
-     */
-    public function addChild(RoleInterface $child);
 }
