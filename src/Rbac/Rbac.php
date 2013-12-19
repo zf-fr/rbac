@@ -9,6 +9,7 @@
 
 namespace Rbac;
 
+use Rbac\Identity\IdentityInterface;
 use Rbac\Permission\PermissionInterface;
 use Rbac\Role\HierarchicalRoleInterface;
 use Rbac\Role\RoleInterface;
@@ -20,32 +21,35 @@ use RecursiveIteratorIterator;
 class Rbac
 {
     /**
-     * Determines if access is granted by checking the role and child roles for permission.
+     * Determines if access is granted by checking the identity roles for permission.
      *
-     * @param  RoleInterface              $role
+     * @param  IdentityInterface          $identity
      * @param  PermissionInterface|string $permission
      * @return bool
      */
-    public function isGranted(RoleInterface $role, $permission)
+    public function isGranted(IdentityInterface $identity, $permission)
     {
         $permission = (string) $permission;
+        $roles      = $identity->getRoles();
 
-        // First check directly the role
-        if ($role->hasPermission($permission)) {
-            return true;
-        }
-
-        // Otherwise, we recursively check each children only if it's a hierarchical role
-        if (!$role instanceof HierarchicalRoleInterface) {
-            return false;
-        }
-
-        $iteratorIterator = new RecursiveIteratorIterator($role, RecursiveIteratorIterator::SELF_FIRST);
-
-        foreach ($iteratorIterator as $child) {
-            /** @var RoleInterface $child */
-            if ($child->hasPermission($permission)) {
+        foreach ($roles as $role) {
+            // First check directly the role
+            if ($role->hasPermission($permission)) {
                 return true;
+            }
+
+            // Otherwise, we recursively check each children only if it's a hierarchical role
+            if (!$role instanceof HierarchicalRoleInterface) {
+                continue;
+            }
+
+            $iteratorIterator = new RecursiveIteratorIterator($role, RecursiveIteratorIterator::SELF_FIRST);
+
+            foreach ($iteratorIterator as $child) {
+                /** @var RoleInterface $child */
+                if ($child->hasPermission($permission)) {
+                    return true;
+                }
             }
         }
 
