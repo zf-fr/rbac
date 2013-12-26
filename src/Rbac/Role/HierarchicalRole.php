@@ -17,14 +17,14 @@ use RecursiveIterator;
 class HierarchicalRole extends Role implements HierarchicalRoleInterface
 {
     /**
+     * {@see RecursiveIterator} implementation
+     */
+    use RecursiveIteratorTrait;
+
+    /**
      * @var array|RoleInterface[]
      */
     protected $children = [];
-
-    /**
-     * @var int
-     */
-    protected $index = 0;
 
     /**
      * {@inheritDoc}
@@ -32,67 +32,5 @@ class HierarchicalRole extends Role implements HierarchicalRoleInterface
     public function addChild(RoleInterface $child)
     {
         $this->children[] = $child;
-    }
-
-    /*
-     * --------------------------------------------------------------------------------
-     * RecursiveIterator implementation
-     * --------------------------------------------------------------------------------
-     */
-
-    /**
-     * {@inheritDoc}
-     */
-    public function current()
-    {
-        return $this->children[$this->index];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function next()
-    {
-        $this->index++;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function key()
-    {
-        return $this->index;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function valid()
-    {
-        return isset($this->children[$this->index]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function rewind()
-    {
-        $this->index = 0;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getChildren()
-    {
-        return $this->children[$this->index];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function hasChildren()
-    {
-        return $this->valid() && $this->current() instanceof RecursiveIterator;
     }
 }
