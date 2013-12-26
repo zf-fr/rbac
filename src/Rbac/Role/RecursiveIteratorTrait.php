@@ -74,6 +74,6 @@ trait RecursiveIteratorTrait
      */
     public function hasChildren()
     {
-        return $this->valid() && $this->current() instanceof RecursiveIterator;
+        return $this->valid() && $this->current() instanceof HierarchicalRoleInterface;
     }
 }
