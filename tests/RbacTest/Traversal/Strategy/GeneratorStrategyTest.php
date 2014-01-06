@@ -15,8 +15,9 @@ use Rbac\Role\Role;
 use Rbac\Traversal\Strategy\GeneratorStrategy;
 
 /**
- * @covers Rbac\Traversal\Strategy\GeneratorStrategy
- * @group  Coverage
+ * @requires PHP 5.5.0
+ * @covers   Rbac\Traversal\Strategy\GeneratorStrategy
+ * @group    Coverage
  */
 class GeneratorStrategyTest extends TestCase
 {
