@@ -3,45 +3,49 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
- * @package   Zend_Permissions
  */
 
 namespace RbacTest;
 
+use PHPUnit_Framework_TestCase as TestCase;
 use Rbac\Role\HierarchicalRole;
 
 /**
- * @covers \Rbac\Role\HierarchicalRole
- * @group Coverage
+ * @covers Rbac\Role\HierarchicalRole
+ * @group  Coverage
  */
-class HierarchicalRoleTest extends \PHPUnit_Framework_TestCase
+class HierarchicalRoleTest extends TestCase
 {
+    /**
+     * @covers Rbac\Role\HierarchicalRole::addChild
+     */
     public function testCanAddChild()
     {
-        $role  = new HierarchicalRole('php');
-        $child = new HierarchicalRole('ror');
+        $role  = new HierarchicalRole('role');
+        $child = new HierarchicalRole('child');
+
         $role->addChild($child);
 
-        $count = 0;
-
-        foreach ($role as $child) {
-            $count++;
-        }
-
-        $this->assertEquals(1, $count);
+        $this->assertCount(1, $role->getChildren());
     }
 
-    public function testDontTestChildPermission()
+    /**
+     * @covers Rbac\Role\HierarchicalRole::getChildren
+     */
+    public function testCanGetChildren()
     {
-        $role  = new HierarchicalRole('php');
-        $child = new HierarchicalRole('ror');
+        $role   = new HierarchicalRole('role');
+        $child1 = new HierarchicalRole('child 1');
+        $child2 = new HierarchicalRole('child 2');
 
-        $role->addChild($role);
-        $child->addPermission('debug');
+        $role->addChild($child1);
+        $role->addChild($child2);
 
-        $this->assertTrue($child->hasPermission('debug'));
-        $this->assertFalse($role->hasPermission('debug'));
+        $children = $role->getChildren();
+
+        $this->assertCount(2, $children);
+        $this->assertContainsOnlyInstancesOf('Rbac\Role\HierarchicalRole', $children);
     }
 }
