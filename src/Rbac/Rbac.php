@@ -30,7 +30,7 @@ class Rbac
      */
     public function __construct(TraversalStrategyInterface $strategy = null)
     {
-        $this->traversalStrategy = ($strategy) ? $strategy : new RecursiveRoleIteratorStrategy;
+        $this->traversalStrategy = $strategy ?: new RecursiveRoleIteratorStrategy;
     }
 
     /**
