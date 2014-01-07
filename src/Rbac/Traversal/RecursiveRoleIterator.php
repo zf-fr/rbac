@@ -13,9 +13,24 @@ use ArrayIterator;
 use Rbac\Role\HierarchicalRoleInterface;
 use Rbac\Role\RoleInterface;
 use RecursiveIterator;
+use Traversable;
 
 class RecursiveRoleIterator extends ArrayIterator implements RecursiveIterator
 {
+    /**
+     * Override constructor to accept {@link Traversable} as well
+     *
+     * @param RoleInterface[]|Traversable
+     */
+    public function __construct($roles)
+    {
+        if ($roles instanceof Traversable) {
+            $roles = iterator_to_array($roles);
+        }
+
+        parent::__construct($roles);
+    }
+
     /**
      * @return bool
      */

@@ -9,6 +9,7 @@
 
 namespace RbacTest\Traversal;
 
+use ArrayIterator;
 use PHPUnit_Framework_TestCase as TestCase;
 use Rbac\Role\HierarchicalRole;
 use Rbac\Role\Role;
@@ -21,6 +22,17 @@ use stdClass;
  */
 class RecursiveRoleIteratorTest extends TestCase
 {
+    /**
+     * @covers Rbac\Traversal\RecursiveRoleIterator::__construct
+     */
+    public function testAcceptTraversable()
+    {
+        $roles    = new ArrayIterator([new Role('foo'), new Role('bar')]);
+        $iterator = new RecursiveRoleIterator($roles);
+
+        $this->assertEquals($iterator->getArrayCopy(), $roles->getArrayCopy());
+    }
+
     /**
      * @covers Rbac\Traversal\RecursiveRoleIterator::valid
      */
