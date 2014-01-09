@@ -42,6 +42,6 @@ class HierarchicalRole extends Role implements HierarchicalRoleInterface
      */
     public function addChild(RoleInterface $child)
     {
-        $this->children[] = $child;
+        $this->children[$child->getName()] = $child;
     }
 }
