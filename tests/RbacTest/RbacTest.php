@@ -67,7 +67,7 @@ class RbacTest extends TestCase
 
         $traversalStrategy = $this->getMock('Rbac\Traversal\Strategy\TraversalStrategyInterface');
         $traversalStrategy->expects($this->once())
-            ->method('traverseRoles')
+            ->method('getRolesIterator')
             ->with($this->equalTo([$role]))
             ->will($this->returnValue(new ArrayIterator([])));
 
@@ -83,7 +83,7 @@ class RbacTest extends TestCase
     {
         $traversalStrategy = $this->getMock('Rbac\Traversal\Strategy\TraversalStrategyInterface');
         $traversalStrategy->expects($this->once())
-            ->method('traverseRoles')
+            ->method('getRolesIterator')
             ->will($this->returnValue(new ArrayIterator([])));
 
         $rbac = new Rbac($traversalStrategy);

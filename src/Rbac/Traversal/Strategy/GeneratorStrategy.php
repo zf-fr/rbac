@@ -15,7 +15,7 @@ use Rbac\Role\RoleInterface;
 use Traversable;
 
 /**
- * Traverses roles recursively with PHP 5.5 generators
+ * Recursively traverse roles using generator
  * Requires PHP >= 5.5
  */
 class GeneratorStrategy implements TraversalStrategyInterface
@@ -24,7 +24,7 @@ class GeneratorStrategy implements TraversalStrategyInterface
      * @param  RoleInterface[]|Traversable $roles
      * @return Generator
      */
-    public function traverseRoles($roles)
+    public function getRolesIterator($roles)
     {
         foreach ($roles as $role) {
             yield $role;
@@ -33,9 +33,9 @@ class GeneratorStrategy implements TraversalStrategyInterface
                 continue;
             }
 
-            $children = $role->getChildren();
+            $children = $this->getRolesIterator($role->getChildren());
 
-            foreach ($this->traverseRoles($children) as $child) {
+            foreach ($children as $child) {
                 yield $child;
             }
         }

@@ -20,13 +20,13 @@ use Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy;
 class RecursiveRoleIteratorStrategyTest extends TestCase
 {
     /**
-     * @covers Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy::traverseRoles
+     * @covers Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy::getRolesIterator
      */
     public function testGetIterator()
     {
         $strategy      = new RecursiveRoleIteratorStrategy;
         $roles         = [new Role('Foo'), new Role('Bar')];
-        $iterator      = $strategy->traverseRoles($roles);
+        $iterator      = $strategy->getRolesIterator($roles);
         $innerIterator = $iterator->getInnerIterator();
 
         $this->assertInstanceOf('RecursiveIteratorIterator', $iterator);

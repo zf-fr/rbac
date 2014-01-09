@@ -14,8 +14,7 @@ use Rbac\Traversal\RecursiveRoleIterator;
 use RecursiveIteratorIterator;
 
 /**
- * Traverses roles recursively a {@link RecursiveRoleIterator}
- * wrapped by a {@link RecursiveIteratorIterator}
+ * Create a {@link RecursiveRoleIterator} and wrap it into a {@link RecursiveIteratorIterator}
  */
 class RecursiveRoleIteratorStrategy implements TraversalStrategyInterface
 {
@@ -23,7 +22,7 @@ class RecursiveRoleIteratorStrategy implements TraversalStrategyInterface
      * @param  RoleInterface[]           $roles
      * @return RecursiveIteratorIterator
      */
-    public function traverseRoles($roles)
+    public function getRolesIterator($roles)
     {
         return new RecursiveIteratorIterator(
             new RecursiveRoleIterator($roles),

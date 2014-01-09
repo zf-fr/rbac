@@ -48,7 +48,7 @@ class Rbac
             $roles = [$roles];
         }
 
-        $iterator = $this->traversalStrategy->traverseRoles($roles);
+        $iterator = $this->traversalStrategy->getRolesIterator($roles);
 
         foreach ($iterator as $role) {
             /* @var RoleInterface $role */
