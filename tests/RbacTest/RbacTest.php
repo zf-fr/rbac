@@ -38,11 +38,13 @@ class RbacTest extends TestCase
     {
         $rbac = new Rbac;
 
-        $this->assertAttributeInstanceOf(
-            'Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy',
-            'traversalStrategy',
-            $rbac
-        );
+        if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
+            $default = 'Rbac\Traversal\Strategy\GeneratorStrategy';
+        } else {
+            $default = 'Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy';
+        }
+
+        $this->assertAttributeInstanceOf($default, 'traversalStrategy', $rbac);
     }
 
     /**

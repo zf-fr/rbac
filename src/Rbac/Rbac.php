@@ -11,6 +11,7 @@ namespace Rbac;
 
 use Rbac\Permission\PermissionInterface;
 use Rbac\Role\RoleInterface;
+use Rbac\Traversal\Strategy\GeneratorStrategy;
 use Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy;
 use Rbac\Traversal\Strategy\TraversalStrategyInterface;
 use Traversable;
@@ -30,7 +31,13 @@ class Rbac
      */
     public function __construct(TraversalStrategyInterface $strategy = null)
     {
-        $this->traversalStrategy = $strategy ?: new RecursiveRoleIteratorStrategy;
+        if (null !== $strategy) {
+            $this->traversalStrategy = $strategy;
+        } elseif (version_compare(PHP_VERSION, '5.5.0', '>=')) {
+            $this->traversalStrategy = new GeneratorStrategy();
+        } else {
+            $this->traversalStrategy = new RecursiveRoleIteratorStrategy();
+        }
     }
 
     /**
