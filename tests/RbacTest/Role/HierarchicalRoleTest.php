@@ -32,6 +32,20 @@ class HierarchicalRoleTest extends TestCase
     }
 
     /**
+     * @covers Rbac\Role\HierarchicalRole::hasChildren
+     */
+    public function testHasChildren()
+    {
+        $role = new HierarchicalRole('role');
+
+        $this->assertFalse($role->hasChildren());
+
+        $role->addChild(new HierarchicalRole('child'));
+
+        $this->assertTrue($role->hasChildren());
+    }
+
+    /**
      * @covers Rbac\Role\HierarchicalRole::getChildren
      */
     public function testCanGetChildren()

@@ -50,11 +50,7 @@ class RecursiveRoleIterator extends ArrayIterator implements RecursiveIterator
             return false;
         }
 
-        if (empty($current->getChildren())) {
-            return false;
-        }
-
-        return true;
+        return $current->hasChildren();
     }
 
     /**

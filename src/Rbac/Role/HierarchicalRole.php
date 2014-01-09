@@ -22,6 +22,14 @@ class HierarchicalRole extends Role implements HierarchicalRoleInterface
     /**
      * {@inheritDoc}
      */
+    public function hasChildren()
+    {
+        return !empty($this->children);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public function getChildren()
     {
         return $this->children;

@@ -19,6 +19,13 @@ use Traversable;
 interface HierarchicalRoleInterface extends RoleInterface
 {
     /**
+     * Check if the role has children
+     *
+     * @return bool
+     */
+    public function hasChildren();
+
+    /**
      * Get child roles
      *
      * @return array|RoleInterface[]|Traversable
