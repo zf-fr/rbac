@@ -27,17 +27,11 @@ class Rbac
     protected $traversalStrategy;
 
     /**
-     * @param null|TraversalStrategyInterface $strategy
+     * @param TraversalStrategyInterface $strategy
      */
-    public function __construct(TraversalStrategyInterface $strategy = null)
+    public function __construct(TraversalStrategyInterface $strategy)
     {
-        if (null !== $strategy) {
-            $this->traversalStrategy = $strategy;
-        } elseif (version_compare(PHP_VERSION, '5.5.0', '>=')) {
-            $this->traversalStrategy = new GeneratorStrategy();
-        } else {
-            $this->traversalStrategy = new RecursiveRoleIteratorStrategy();
-        }
+        $this->traversalStrategy = $strategy;
     }
 
     /**
