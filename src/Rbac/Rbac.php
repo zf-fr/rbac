@@ -72,7 +72,7 @@ class Rbac
      *
      * @return TraversalStrategyInterface
      */
-    public function getStrategy()
+    public function getTraversalStrategy()
     {
         return $this->traversalStrategy;
     }
