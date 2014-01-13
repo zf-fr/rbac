@@ -13,6 +13,7 @@ use ArrayIterator;
 use PHPUnit_Framework_TestCase as TestCase;
 use Rbac\Rbac;
 use Rbac\Role\Role;
+use Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy;
 
 /**
  * @covers Rbac\Rbac
@@ -32,27 +33,11 @@ class RbacTest extends TestCase
     }
 
     /**
-     * @covers Rbac\Rbac::__construct
-     */
-    public function testConstructorWillSetDefaultTraversalStrategyIfNoneIsSpecified()
-    {
-        $rbac = new Rbac;
-
-        if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
-            $default = 'Rbac\Traversal\Strategy\GeneratorStrategy';
-        } else {
-            $default = 'Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy';
-        }
-
-        $this->assertAttributeInstanceOf($default, 'traversalStrategy', $rbac);
-    }
-
-    /**
      * @covers Rbac\Rbac::isGranted
      */
     public function testCastPermissionToString()
     {
-        $rbac = new Rbac;
+        $rbac = new Rbac(new RecursiveRoleIteratorStrategy());
 
         $permission = $this->getMock('Rbac\Permission\PermissionInterface');
         $permission->expects($this->once())->method('__toString')->will($this->returnValue('permission'));
@@ -105,7 +90,7 @@ class RbacTest extends TestCase
             ->will($this->returnValue(false));
 
         $roles = [$role, $role, $role];
-        $rbac  = new Rbac;
+        $rbac  = new Rbac(new RecursiveRoleIteratorStrategy());
 
         $rbac->isGranted($roles, 'permission');
     }
@@ -125,7 +110,7 @@ class RbacTest extends TestCase
         $nextRole->expects($this->never())->method('hasPermission');
 
         $roles = [$grantedRole, $nextRole];
-        $rbac  = new Rbac;
+        $rbac  = new Rbac(new RecursiveRoleIteratorStrategy());
 
         $this->assertTrue($rbac->isGranted($roles, 'permission'));
     }
@@ -133,7 +118,7 @@ class RbacTest extends TestCase
     public function testReturnFalseIfNoRoleHasPermission()
     {
         $roles = [new Role('Foo'), new Role('Bar')];
-        $rbac  = new Rbac;
+        $rbac  = new Rbac(new RecursiveRoleIteratorStrategy());
 
         $this->assertFalse($rbac->isGranted($roles, 'permission'));
     }
