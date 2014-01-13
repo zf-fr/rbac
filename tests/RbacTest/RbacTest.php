@@ -137,4 +137,12 @@ class RbacTest extends TestCase
 
         $this->assertFalse($rbac->isGranted($roles, 'permission'));
     }
+
+    public function testGetStrategy()
+    {
+        $customStrategy = $this->getMock('Rbac\Traversal\Strategy\TraversalStrategyInterface');
+        $rbac           = new Rbac($customStrategy);
+
+        $this->assertSame($customStrategy, $rbac->getStrategy());
+    }
 }
