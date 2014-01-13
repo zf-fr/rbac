@@ -66,4 +66,14 @@ class Rbac
 
         return false;
     }
+
+    /**
+     * Get the strategy.
+     *
+     * @return TraversalStrategyInterface
+     */
+    public function getStrategy()
+    {
+        return $this->traversalStrategy;
+    }
 }
