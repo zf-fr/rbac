@@ -3,48 +3,63 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Rbac;
 
 use Rbac\Permission\PermissionInterface;
-use Rbac\Role\HierarchicalRoleInterface;
 use Rbac\Role\RoleInterface;
-use RecursiveIteratorIterator;
+use Rbac\Traversal\Strategy\GeneratorStrategy;
+use Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy;
+use Rbac\Traversal\Strategy\TraversalStrategyInterface;
+use Traversable;
 
 /**
- * Rbac object. It is used to check a permission against a role
+ * Rbac object. It is used to check a permission against roles
  */
 class Rbac
 {
     /**
-     * Determines if access is granted by checking the role and child roles for permission.
+     * @var TraversalStrategyInterface
+     */
+    protected $traversalStrategy;
+
+    /**
+     * @param null|TraversalStrategyInterface $strategy
+     */
+    public function __construct(TraversalStrategyInterface $strategy = null)
+    {
+        if (null !== $strategy) {
+            $this->traversalStrategy = $strategy;
+        } elseif (version_compare(PHP_VERSION, '5.5.0', '>=')) {
+            $this->traversalStrategy = new GeneratorStrategy();
+        } else {
+            $this->traversalStrategy = new RecursiveRoleIteratorStrategy();
+        }
+    }
+
+    /**
+     * Determines if access is granted by checking the roles for permission.
      *
-     * @param  RoleInterface              $role
-     * @param  PermissionInterface|string $permission
+     * @param  RoleInterface|RoleInterface[]|Traversable $roles
+     * @param  PermissionInterface|string                $permission
      * @return bool
      */
-    public function isGranted(RoleInterface $role, $permission)
+    public function isGranted($roles, $permission)
     {
         $permission = (string) $permission;
 
-        // First check directly the role
-        if ($role->hasPermission($permission)) {
-            return true;
+        if ($roles instanceof RoleInterface) {
+            $roles = [$roles];
         }
 
-        // Otherwise, we recursively check each children only if it's a hierarchical role
-        if (!$role instanceof HierarchicalRoleInterface) {
-            return false;
-        }
+        $iterator = $this->traversalStrategy->getRolesIterator($roles);
 
-        $iteratorIterator = new RecursiveIteratorIterator($role, RecursiveIteratorIterator::SELF_FIRST);
-
-        foreach ($iteratorIterator as $child) {
-            /** @var RoleInterface $child */
-            if ($child->hasPermission($permission)) {
+        foreach ($iterator as $role) {
+            /* @var RoleInterface $role */
+            if ($role->hasPermission($permission)) {
                 return true;
             }
         }

@@ -3,13 +3,11 @@
  * Zend Framework (http://framework.zend.com/)
  *
  * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @copyright Copyright (c) 2005-2014 Zend Technologies USA Inc. (http://www.zend.com)
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
 namespace Rbac\Role;
-
-use RecursiveIterator;
 
 /**
  * Simple implementation for a hierarchical role
@@ -22,62 +20,11 @@ class HierarchicalRole extends Role implements HierarchicalRoleInterface
     protected $children = [];
 
     /**
-     * @var int
-     */
-    protected $index = 0;
-
-    /**
      * {@inheritDoc}
      */
-    public function addChild(RoleInterface $child)
+    public function hasChildren()
     {
-        $this->children[] = $child;
-    }
-
-    /*
-     * --------------------------------------------------------------------------------
-     * RecursiveIterator implementation
-     * --------------------------------------------------------------------------------
-     */
-
-    /**
-     * {@inheritDoc}
-     */
-    public function current()
-    {
-        return $this->children[$this->index];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function next()
-    {
-        $this->index++;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function key()
-    {
-        return $this->index;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function valid()
-    {
-        return isset($this->children[$this->index]);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function rewind()
-    {
-        $this->index = 0;
+        return !empty($this->children);
     }
 
     /**
@@ -85,14 +32,16 @@ class HierarchicalRole extends Role implements HierarchicalRoleInterface
      */
     public function getChildren()
     {
-        return $this->children[$this->index];
+        return $this->children;
     }
 
     /**
-     * {@inheritDoc}
+     * Add a child role
+     *
+     * @param RoleInterface $child
      */
-    public function hasChildren()
+    public function addChild(RoleInterface $child)
     {
-        return $this->valid() && $this->current() instanceof RecursiveIterator;
+        $this->children[$child->getName()] = $child;
     }
 }
