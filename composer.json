@@ -26,9 +26,6 @@
         "squizlabs/php_codesniffer": "1.4.*",
         "satooshi/php-coveralls": "~0.6"
     },
-    "suggest": {
-        "zendframework/zend-servicemanager": "If you want to use RBAC factory"
-    },
     "autoload": {
         "psr-0": {
             "Rbac\\": "src/"
