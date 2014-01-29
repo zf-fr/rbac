@@ -43,8 +43,6 @@ class Rbac
      */
     public function isGranted($roles, $permission)
     {
-        $permission = (string) $permission;
-
         if ($roles instanceof RoleInterface) {
             $roles = [$roles];
         }
