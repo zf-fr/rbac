@@ -38,7 +38,7 @@ class Rbac
      * Determines if access is granted by checking the roles for permission.
      *
      * @param  RoleInterface|RoleInterface[]|Traversable $roles
-     * @param  PermissionInterface|string                $permission
+     * @param  mixed                                     $permission
      * @return bool
      */
     public function isGranted($roles, $permission)
