@@ -9,8 +9,6 @@
 
 namespace Rbac\Role;
 
-use Rbac\Permission\PermissionInterface;
-
 /**
  * Interface for a flat role
  *
@@ -28,7 +26,7 @@ interface RoleInterface
     /**
      * Checks if a permission exists for this role (it does not check child roles)
      *
-     * @param  PermissionInterface|string $permission
+     * @param  $permission
      * @return bool
      */
     public function hasPermission($permission);
