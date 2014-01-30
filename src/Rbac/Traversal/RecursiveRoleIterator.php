@@ -20,7 +20,7 @@ class RecursiveRoleIterator extends ArrayIterator implements RecursiveIterator
     /**
      * Override constructor to accept {@link Traversable} as well
      *
-     * @param RoleInterface[]|Traversable
+     * @param RoleInterface[]|Traversable $roles
      */
     public function __construct($roles)
     {

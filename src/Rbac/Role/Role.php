@@ -9,7 +9,6 @@
 
 namespace Rbac\Role;
 
-use InvalidArgumentException;
 use Rbac\Permission\PermissionInterface;
 
 /**
@@ -24,7 +23,7 @@ class Role implements RoleInterface
     protected $name;
 
     /**
-     * @var string[]
+     * @var string[]|PermissionInterface[]
      */
     protected $permissions = [];
 
@@ -50,28 +49,20 @@ class Role implements RoleInterface
      * Add a permission
      *
      * @param  PermissionInterface|string $permission
-     * @throws InvalidArgumentException
      */
     public function addPermission($permission)
     {
-        if (!is_string($permission)) {
-            throw new InvalidArgumentException("Permission should be a string");
-        }
         $this->permissions[(string) $permission] = $permission;
     }
 
     /**
      * Checks if a permission exists for this role
      *
-     * @param  string $permission
-     * @throws InvalidArgumentException
+     * @param  PermissionInterface|string $permission
      * @return bool
      */
     public function hasPermission($permission)
     {
-        if (!is_string($permission)) {
-            throw new InvalidArgumentException("Permission should be a string");
-        }
         return isset($this->permissions[(string) $permission]);
     }
 }
