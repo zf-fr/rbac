@@ -9,6 +9,7 @@
 
 namespace Rbac;
 
+use InvalidArgumentException;
 use Rbac\Permission\PermissionInterface;
 use Rbac\Role\RoleInterface;
 use Rbac\Traversal\Strategy\GeneratorStrategy;
@@ -40,12 +41,12 @@ class Rbac
      * @param  RoleInterface|RoleInterface[]|Traversable $roles
      * @param  PermissionInterface|string                $permission
      * @return bool
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function isGranted($roles, $permission)
     {
         if (!is_string($permission) && !$permission instanceof PermissionInterface) {
-            throw new \InvalidArgumentException("permission should be a string or a PermissionInterface");
+            throw new InvalidArgumentException("permission should be a string or a PermissionInterface");
         }
         
         $permission = (string) $permission;
