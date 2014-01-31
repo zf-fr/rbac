@@ -25,7 +25,7 @@ class RoleTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers Rbac\Role\Role::hasPermission
+     * @covers Rbac\Role\Role::addPermission
      */
     public function testRoleCanAddPermission()
     {
@@ -39,18 +39,5 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $role->addPermission($permission);
 
         $this->assertTrue($role->hasPermission('interface'));
-    }
-
-    /**
-     * @covers Rbac\Role\Role::hasPermission
-     */
-    public function testCastPermissionToString()
-    {
-        $role = new Role('foobar');
-
-        $permission = $this->getMock('Rbac\Permission\PermissionInterface');
-        $permission->expects($this->once())->method('__toString')->will($this->returnValue('permission'));
-
-        $role->hasPermission($permission);
     }
 }

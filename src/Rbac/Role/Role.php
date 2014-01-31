@@ -58,7 +58,7 @@ class Role implements RoleInterface
     /**
      * Checks if a permission exists for this role
      *
-     * @param  PermissionInterface|string $permission
+     * @param PermissionInterface|string $permission
      * @return bool
      */
     public function hasPermission($permission)
