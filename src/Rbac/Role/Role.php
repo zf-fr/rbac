@@ -9,8 +9,6 @@
 
 namespace Rbac\Role;
 
-use Rbac\Permission\PermissionInterface;
-
 /**
  * Simple implementation for a role without hierarchy
  * and using strings as permissions
@@ -23,7 +21,7 @@ class Role implements RoleInterface
     protected $name;
 
     /**
-     * @var string[]|PermissionInterface[]
+     * @var string[]
      */
     protected $permissions = [];
 
@@ -48,7 +46,7 @@ class Role implements RoleInterface
     /**
      * Add a permission
      *
-     * @param  PermissionInterface|string $permission
+     * @param  string $permission
      */
     public function addPermission($permission)
     {
@@ -58,7 +56,7 @@ class Role implements RoleInterface
     /**
      * Checks if a permission exists for this role
      *
-     * @param PermissionInterface|string $permission
+     * @param string $permission
      * @return bool
      */
     public function hasPermission($permission)
