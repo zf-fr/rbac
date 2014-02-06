@@ -11,6 +11,8 @@ namespace Rbac\Permission;
 
 /**
  * Interface for permission
+ *
+ * @deprecated It will be removed from final implementation (likely for Zend Framework 3)
  */
 interface PermissionInterface
 {
