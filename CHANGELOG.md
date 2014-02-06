@@ -7,6 +7,7 @@ may be a potential BC if you only expected string in your `hasPermission` method
 * `PermissionInterface` is deprecated and will be removed in final implementation (likely for ZF3). RBAC should not
 enforce any interface for a permission as its representation is dependant of your application. However, modules
 like ZfcRbac may enforce an interface for permissions.
+* Various PHPDoc fixes
 
 ## 1.1.0
 
