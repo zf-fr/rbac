@@ -24,11 +24,20 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('phpIsHell', $role->getName());
     }
 
+    /**
+     * @covers Rbac\Role\Role::addPermission
+     */
     public function testRoleCanAddPermission()
     {
         $role = new Role('php');
 
         $role->addPermission('debug');
         $this->assertTrue($role->hasPermission('debug'));
+
+        $permission = $this->getMock('Rbac\Permission\PermissionInterface');
+        $permission->expects($this->once())->method('__toString')->will($this->returnValue('interface'));
+        $role->addPermission($permission);
+
+        $this->assertTrue($role->hasPermission('interface'));
     }
 }

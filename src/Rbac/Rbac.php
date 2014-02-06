@@ -9,10 +9,7 @@
 
 namespace Rbac;
 
-use Rbac\Permission\PermissionInterface;
 use Rbac\Role\RoleInterface;
-use Rbac\Traversal\Strategy\GeneratorStrategy;
-use Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy;
 use Rbac\Traversal\Strategy\TraversalStrategyInterface;
 use Traversable;
 
@@ -38,13 +35,11 @@ class Rbac
      * Determines if access is granted by checking the roles for permission.
      *
      * @param  RoleInterface|RoleInterface[]|Traversable $roles
-     * @param  PermissionInterface|string                $permission
+     * @param  mixed                                     $permission
      * @return bool
      */
     public function isGranted($roles, $permission)
     {
-        $permission = (string) $permission;
-
         if ($roles instanceof RoleInterface) {
             $roles = [$roles];
         }
