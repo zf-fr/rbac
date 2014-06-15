@@ -44,6 +44,14 @@ class Role implements RoleInterface
     }
 
     /**
+     * @return string[]
+     */
+    public function getPermissions()
+    {
+        return $this->permissions;
+    }
+    
+    /**
      * Add a permission
      *
      * @param string $permission
