@@ -51,14 +51,9 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $role->addPermission('foo');
         $role->addPermission('bar');
 
-        $permission = $this->getMock('Rbac\Permission\PermissionInterface');
-        $permission->expects($this->once())->method('__toString')->will($this->returnValue('baz'));
-        $role->addPermission($permission);
-
         $expectedPermissions = [
             'foo' => 'foo',
             'bar' => 'bar',
-            'baz' => $permission,
         ];
         $this->assertEquals($expectedPermissions, $role->getPermissions());
     }
