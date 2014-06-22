@@ -62,10 +62,7 @@ class Role implements RoleInterface
     }
 
     /**
-     * Checks if a permission exists for this role
-     *
-     * @param  string $permission
-     * @return bool
+     * {@inheritDoc}
      */
     public function hasPermission($permission)
     {
