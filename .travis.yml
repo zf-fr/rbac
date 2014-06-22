@@ -9,8 +9,9 @@ before_script:
   - composer update --prefer-source --dev
 
 script:
-  - ./vendor/bin/phpunit --coverage-clover ./build/logs/clover.xml --group=Coverage
+  - ./vendor/bin/phpunit --coverage-clover=coverage.clover --group=Coverage
   - ./vendor/bin/phpcs --standard=PSR2 ./src/
 
 after_script:
-  - php vendor/bin/coveralls -v
+  - wget https://scrutinizer-ci.com/ocular.phar
+  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
