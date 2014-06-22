@@ -2,6 +2,8 @@ Rbac
 ====
 
 [![Build Status](https://travis-ci.org/zf-fr/rbac.png)](https://travis-ci.org/zf-fr/rbac)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/zf-fr/rbac/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/zf-fr/rbac/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/zf-fr/rbac/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/zf-fr/rbac/?branch=master)
 [![Latest Stable Version](https://poser.pugx.org/zfr/rbac/v/stable.png)](https://packagist.org/packages/zfr/rbac)
 [![Total Downloads](https://poser.pugx.org/zfr/rbac/downloads.png)](https://packagist.org/packages/zfr/rbac)
 
@@ -12,7 +14,6 @@ It aims to fix some design mistakes that were made to make it more usable and mo
 
 It differs on those points:
 
-* A `PermissionInterface` has been introduced.
 * `RoleInterface` no longer have `setParent` and `getParent` methods, and cannot have children anymore (this is
 used to implement a simpler "flat RBAC").
 * A new `HierarchicalRoleInterface` has been introduced to allow roles to have children.
@@ -21,4 +22,5 @@ To properly check if a role is granted, you should use the `isGranted` method of
 * `Rbac` class is no longer a container. Instead, it just has a `isGranted` method. The container was complex to
 properly handle because of role duplication, which could lead to security problems if not used correctly.
 
-This library is used in ZfcRbac 2.0
+Version 1.0 of this library is used in ZfcRbac 2.0.
+Version 2.0 of this library is used in ZfcRbac 3.0.
