@@ -40,4 +40,21 @@ class RoleTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($role->hasPermission('interface'));
     }
+
+    /**
+     * @covers Rbac\Role\Role::getPermissions
+     */
+    public function testRoleCanGetPermissions()
+    {
+        $role = new Role('php');
+
+        $role->addPermission('foo');
+        $role->addPermission('bar');
+
+        $expectedPermissions = [
+            'foo' => 'foo',
+            'bar' => 'bar',
+        ];
+        $this->assertEquals($expectedPermissions, $role->getPermissions());
+    }
 }
