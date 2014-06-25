@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 2.0.0
+
+* `PermissionInterface` has been removed from RBAC component. This has been moved to ZfcRbac.
+
 ## 1.2.0
 
 * `isGranted` no longer cast permissions to string. Instead, the permission is now given to your role entity as it. This

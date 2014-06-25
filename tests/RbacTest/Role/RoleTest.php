@@ -34,11 +34,9 @@ class RoleTest extends \PHPUnit_Framework_TestCase
         $role->addPermission('debug');
         $this->assertTrue($role->hasPermission('debug'));
 
-        $permission = $this->getMock('Rbac\Permission\PermissionInterface');
-        $permission->expects($this->once())->method('__toString')->will($this->returnValue('interface'));
-        $role->addPermission($permission);
+        $role->addPermission('delete');
 
-        $this->assertTrue($role->hasPermission('interface'));
+        $this->assertTrue($role->hasPermission('delete'));
     }
 
     /**
