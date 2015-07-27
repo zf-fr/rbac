@@ -30,4 +30,11 @@ interface RoleInterface
      * @return bool
      */
     public function hasPermission($permission);
+
+    /**
+     * Get the list of permissions
+     *
+     * @return string[]
+     */
+    public function getPermissions();
 }
