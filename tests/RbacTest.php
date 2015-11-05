@@ -13,7 +13,6 @@ use ArrayIterator;
 use PHPUnit_Framework_TestCase as TestCase;
 use Rbac\Rbac;
 use Rbac\Role\Role;
-use Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy;
 
 /**
  * @covers Rbac\Rbac
@@ -21,17 +20,6 @@ use Rbac\Traversal\Strategy\RecursiveRoleIteratorStrategy;
  */
 class RbacTest extends TestCase
 {
-    /**
-     * @covers Rbac\Rbac::__construct
-     */
-    public function testConstructorAcceptCustomTraversalStrategy()
-    {
-        $customStrategy = $this->getMock('Rbac\Traversal\Strategy\TraversalStrategyInterface');
-        $rbac           = new Rbac($customStrategy);
-
-        $this->assertAttributeSame($customStrategy, 'traversalStrategy', $rbac);
-    }
-
     /**
      * @covers Rbac\Rbac::isGranted
      */

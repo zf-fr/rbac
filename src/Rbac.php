@@ -9,8 +9,9 @@
 
 namespace Rbac;
 
+use Generator;
+use Rbac\Role\HierarchicalRoleInterface;
 use Rbac\Role\RoleInterface;
-use Rbac\Traversal\Strategy\TraversalStrategyInterface;
 use Traversable;
 
 /**
@@ -18,19 +19,6 @@ use Traversable;
  */
 class Rbac
 {
-    /**
-     * @var TraversalStrategyInterface
-     */
-    protected $traversalStrategy;
-
-    /**
-     * @param TraversalStrategyInterface $strategy
-     */
-    public function __construct(TraversalStrategyInterface $strategy)
-    {
-        $this->traversalStrategy = $strategy;
-    }
-
     /**
      * Determines if access is granted by checking the roles for permission.
      *
@@ -44,9 +32,7 @@ class Rbac
             $roles = [$roles];
         }
 
-        $iterator = $this->traversalStrategy->getRolesIterator($roles);
-
-        foreach ($iterator as $role) {
+        foreach ($this->getRolesIterator($roles) as $role) {
             /* @var RoleInterface $role */
             if ($role->hasPermission($permission)) {
                 return true;
@@ -57,12 +43,23 @@ class Rbac
     }
 
     /**
-     * Get the strategy.
-     *
-     * @return TraversalStrategyInterface
+     * @param  RoleInterface|RoleInterface[]|Traversable $roles
+     * @return Generator
      */
-    public function getTraversalStrategy()
+    protected function getRolesIterator($roles)
     {
-        return $this->traversalStrategy;
+        foreach ($roles as $role) {
+            yield $role;
+
+            if (!$role instanceof HierarchicalRoleInterface) {
+                continue;
+            }
+
+            $children = $this->getRolesIterator($role->getChildren());
+
+            foreach ($children as $child) {
+                yield $child;
+            }
+        }
     }
 }
