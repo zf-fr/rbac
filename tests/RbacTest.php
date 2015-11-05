@@ -13,6 +13,7 @@ use ArrayIterator;
 use PHPUnit_Framework_TestCase as TestCase;
 use Rbac\Rbac;
 use Rbac\Role\Role;
+use Rbac\Role\RoleInterface;
 
 /**
  * @covers Rbac\Rbac
@@ -58,7 +59,7 @@ class RbacTest extends TestCase
      */
     public function testTraverseRoles()
     {
-        $role = $this->getMock('Rbac\Role\RoleInterface');
+        $role = $this->getMock(RoleInterface::class);
         $role->expects($this->exactly(3))
             ->method('hasPermission')
             ->with($this->equalTo('permission'))
@@ -75,13 +76,13 @@ class RbacTest extends TestCase
      */
     public function testReturnTrueWhenRoleHasPermission()
     {
-        $grantedRole = $this->getMock('Rbac\Role\RoleInterface');
+        $grantedRole = $this->getMock(RoleInterface::class);
         $grantedRole->expects($this->once())
             ->method('hasPermission')
             ->with('permission')
             ->will($this->returnValue(true));
 
-        $nextRole = $this->getMock('Rbac\Role\RoleInterface');
+        $nextRole = $this->getMock(RoleInterface::class);
         $nextRole->expects($this->never())->method('hasPermission');
 
         $roles = [$grantedRole, $nextRole];

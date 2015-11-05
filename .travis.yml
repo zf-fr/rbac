@@ -1,3 +1,5 @@
+sudo: false
+
 language: php
 
 php:
@@ -17,7 +19,3 @@ before_script:
 script:
   - ./vendor/bin/phpunit --coverage-clover=coverage.clover --group=Coverage
   - ./vendor/bin/phpcs --standard=PSR2 ./src/
-
-after_script:
-  - wget https://scrutinizer-ci.com/ocular.phar
-  - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
