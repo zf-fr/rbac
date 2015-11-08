@@ -9,12 +9,11 @@
 
 namespace RbacTest;
 
-use ArrayIterator;
 use PHPUnit_Framework_TestCase as TestCase;
+use Rbac\Exception\RuntimeException;
 use Rbac\Rbac;
 use Rbac\Role\HierarchicalRole;
 use Rbac\Role\Role;
-use Rbac\Role\RoleInterface;
 
 /**
  * @covers Rbac\Rbac
@@ -22,6 +21,17 @@ use Rbac\Role\RoleInterface;
  */
 class RbacTest extends TestCase
 {
+    /**
+     * @covers Rbac\Rbac::isGranted
+     */
+    public function testEnforcePermissionAsString()
+    {
+        $this->setExpectedException(RuntimeException::class);
+
+        $rbac = new Rbac();
+        $rbac->isGranted([], new \stdClass());
+    }
+
     /**
      * @covers Rbac\Rbac::isGranted
      */

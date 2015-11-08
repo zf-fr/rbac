@@ -10,6 +10,7 @@
 namespace Rbac;
 
 use Generator;
+use Rbac\Exception\RuntimeException;
 use Rbac\Role\HierarchicalRoleInterface;
 use Rbac\Role\RoleInterface;
 use Traversable;
@@ -23,11 +24,18 @@ class Rbac
      * Determines if access is granted by checking the roles for permission.
      *
      * @param  RoleInterface|RoleInterface[]|Traversable $roles
-     * @param  mixed                                     $permission
+     * @param  string                                    $permission
      * @return bool
      */
     public function isGranted($roles, $permission)
     {
+        if (!is_string($permission)) {
+            throw new RuntimeException(sprintf(
+                'Permission must be a string, "%s" given',
+                is_object($permission) ? get_class($permission) : gettype($permission)
+            ));
+        }
+
         if ($roles instanceof RoleInterface) {
             $roles = [$roles];
         }
