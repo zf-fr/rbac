@@ -28,7 +28,7 @@ interface HierarchicalRoleInterface extends RoleInterface
     /**
      * Get child roles
      *
-     * @return array|RoleInterface[]|Traversable
+     * @return RoleInterface[]|Traversable
      */
     public function getChildren();
 }
