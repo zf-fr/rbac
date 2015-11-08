@@ -32,7 +32,7 @@ class Rbac
             $roles = [$roles];
         }
 
-        foreach ($this->getRolesIterator($roles) as $role) {
+        foreach ($this->flattenRoles($roles) as $role) {
             /* @var RoleInterface $role */
             if ($role->hasPermission($permission)) {
                 return true;
@@ -43,10 +43,10 @@ class Rbac
     }
 
     /**
-     * @param  RoleInterface|RoleInterface[]|Traversable $roles
+     * @param  RoleInterface[]|Traversable $roles
      * @return Generator
      */
-    protected function getRolesIterator($roles)
+    protected function flattenRoles($roles)
     {
         foreach ($roles as $role) {
             yield $role;
@@ -55,7 +55,7 @@ class Rbac
                 continue;
             }
 
-            $children = $this->getRolesIterator($role->getChildren());
+            $children = $this->flattenRoles($role->getChildren());
 
             foreach ($children as $child) {
                 yield $child;

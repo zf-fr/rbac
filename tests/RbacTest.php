@@ -12,6 +12,7 @@ namespace RbacTest;
 use ArrayIterator;
 use PHPUnit_Framework_TestCase as TestCase;
 use Rbac\Rbac;
+use Rbac\Role\HierarchicalRole;
 use Rbac\Role\Role;
 use Rbac\Role\RoleInterface;
 
@@ -24,86 +25,83 @@ class RbacTest extends TestCase
     /**
      * @covers Rbac\Rbac::isGranted
      */
-    public function testInjectSingleRoleToArray()
+    public function testCanConvertSingleRole()
     {
         $role = new Role('Foo');
+        $role->addPermission('permission');
 
-        $traversalStrategy = $this->getMock('Rbac\Traversal\Strategy\TraversalStrategyInterface');
-        $traversalStrategy->expects($this->once())
-            ->method('getRolesIterator')
-            ->with($this->equalTo([$role]))
-            ->will($this->returnValue(new ArrayIterator([])));
+        $rbac = new Rbac();
 
-        $rbac = new Rbac($traversalStrategy);
-
-        $rbac->isGranted($role, 'permission');
+        $this->assertTrue($rbac->isGranted($role, 'permission'));
     }
 
     /**
      * @covers Rbac\Rbac::isGranted
      */
-    public function testFetchIteratorFromTraversalStrategy()
+    public function testCanUseEmptyArray()
     {
-        $traversalStrategy = $this->getMock('Rbac\Traversal\Strategy\TraversalStrategyInterface');
-        $traversalStrategy->expects($this->once())
-            ->method('getRolesIterator')
-            ->will($this->returnValue(new ArrayIterator([])));
-
-        $rbac = new Rbac($traversalStrategy);
-
-        $rbac->isGranted([], 'permission');
+        $rbac = new Rbac();
+        $this->assertFalse($rbac->isGranted([], 'permission'));
     }
 
     /**
      * @covers Rbac\Rbac::isGranted
      */
-    public function testTraverseRoles()
+    public function testCanCheckMultipleRolesWithMatchingPermission()
     {
-        $role = $this->getMock(RoleInterface::class);
-        $role->expects($this->exactly(3))
-            ->method('hasPermission')
-            ->with($this->equalTo('permission'))
-            ->will($this->returnValue(false));
+        $role1 = new Role('Foo');
 
-        $roles = [$role, $role, $role];
-        $rbac  = new Rbac(new RecursiveRoleIteratorStrategy());
+        $role2 = new Role('Bar');
+        $role2->addPermission('permission');
 
-        $rbac->isGranted($roles, 'permission');
-    }
-
-    /**
-     * @covers Rbac\Rbac::isGranted
-     */
-    public function testReturnTrueWhenRoleHasPermission()
-    {
-        $grantedRole = $this->getMock(RoleInterface::class);
-        $grantedRole->expects($this->once())
-            ->method('hasPermission')
-            ->with('permission')
-            ->will($this->returnValue(true));
-
-        $nextRole = $this->getMock(RoleInterface::class);
-        $nextRole->expects($this->never())->method('hasPermission');
-
-        $roles = [$grantedRole, $nextRole];
-        $rbac  = new Rbac(new RecursiveRoleIteratorStrategy());
+        $roles = [$role1, $role2];
+        $rbac  = new Rbac();
 
         $this->assertTrue($rbac->isGranted($roles, 'permission'));
     }
 
+    /**
+     * @covers Rbac\Rbac::isGranted
+     */
     public function testReturnFalseIfNoRoleHasPermission()
     {
-        $roles = [new Role('Foo'), new Role('Bar')];
-        $rbac  = new Rbac(new RecursiveRoleIteratorStrategy());
+        $role1 = new Role('Foo');
+        $role2 = new Role('Bar');
+
+        $roles = [$role1, $role2];
+        $rbac  = new Rbac();
 
         $this->assertFalse($rbac->isGranted($roles, 'permission'));
     }
 
-    public function testGetTraversalStrategy()
+    /**
+     * @covers Rbac\Rbac::isGranted
+     */
+    public function testCanCheckHierarchicalRole()
     {
-        $customStrategy = $this->getMock('Rbac\Traversal\Strategy\TraversalStrategyInterface');
-        $rbac           = new Rbac($customStrategy);
+        $childRole  = new Role('Bar');
+        $childRole->addPermission('permission');
 
-        $this->assertSame($customStrategy, $rbac->getTraversalStrategy());
+        $parentRole = new HierarchicalRole('Foo');
+        $parentRole->addChild($childRole);
+
+        $rbac = new Rbac();
+
+        $this->assertTrue($rbac->isGranted($parentRole, 'permission'));
+    }
+
+    /**
+     * @covers Rbac\Rbac::isGranted
+     */
+    public function testReturnFalseIfNoHierarchicalRoleHasPermission()
+    {
+        $childRole  = new Role('Bar');
+
+        $parentRole = new HierarchicalRole('Foo');
+        $parentRole->addChild($childRole);
+
+        $rbac = new Rbac();
+
+        $this->assertFalse($rbac->isGranted($parentRole, 'permission'));
     }
 }
