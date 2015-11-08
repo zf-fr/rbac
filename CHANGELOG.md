@@ -3,7 +3,8 @@
 ## 2.0.0
 
 * Minimum PHP dependency has been raised to 5.5.
-* `PermissionInterface` has been removed from RBAC component. This has been moved to ZfcRbac.
+* `PermissionInterface` has been removed from RBAC component. This has been moved to ZfcRbac. Rbac only accepts "mixed"
+permission, and it is up to your implementation to decide what a permission is.
 
 ## 1.2.0
 
