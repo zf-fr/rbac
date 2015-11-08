@@ -11,6 +11,7 @@ namespace RbacTest;
 
 use PHPUnit_Framework_TestCase as TestCase;
 use Rbac\Role\HierarchicalRole;
+use Rbac\Role\HierarchicalRoleInterface;
 
 /**
  * @covers Rbac\Role\HierarchicalRole
@@ -60,6 +61,6 @@ class HierarchicalRoleTest extends TestCase
         $children = $role->getChildren();
 
         $this->assertCount(2, $children);
-        $this->assertContainsOnlyInstancesOf('Rbac\Role\HierarchicalRole', $children);
+        $this->assertContainsOnlyInstancesOf(HierarchicalRoleInterface::class, $children);
     }
 }

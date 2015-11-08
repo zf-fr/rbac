@@ -7,19 +7,10 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace Rbac\Traversal\Strategy;
+namespace Rbac\Exception;
 
-use Rbac\Role\RoleInterface;
-use Traversable;
+use RuntimeException as BaseRuntimeException;
 
-/**
- * Interface for a traversal strategy
- */
-interface TraversalStrategyInterface
+class RuntimeException extends BaseRuntimeException implements ExceptionInterface
 {
-    /**
-     * @param  RoleInterface[]|Traversable
-     * @return Traversable
-     */
-    public function getRolesIterator($roles);
 }
