@@ -30,4 +30,11 @@ interface RoleInterface
      * @return bool
      */
     public function hasPermission($permission);
+    
+    /**
+     * Transform role to string
+     *
+     * @return string
+     */
+    public function __toString();
 }
