@@ -68,4 +68,12 @@ class Role implements RoleInterface
     {
         return isset($this->permissions[(string) $permission]);
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public function __toString()
+    {
+        return (string) $this->name;
+    }
 }
