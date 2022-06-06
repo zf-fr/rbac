@@ -34,6 +34,7 @@ class RecursiveRoleIterator extends ArrayIterator implements RecursiveIterator
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function valid()
     {
         return $this->current() instanceof RoleInterface;
@@ -42,6 +43,7 @@ class RecursiveRoleIterator extends ArrayIterator implements RecursiveIterator
     /**
      * @return bool
      */
+    #[\ReturnTypeWillChange]
     public function hasChildren()
     {
         $current = $this->current();
@@ -56,6 +58,7 @@ class RecursiveRoleIterator extends ArrayIterator implements RecursiveIterator
     /**
      * @return RecursiveRoleIterator
      */
+    #[\ReturnTypeWillChange]
     public function getChildren()
     {
         return new RecursiveRoleIterator($this->current()->getChildren());
